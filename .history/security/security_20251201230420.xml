@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Catégorie de Module -->
+        <record id="module_category_clinic" model="ir.module.category">
+            <field name="name">Gestion Cabinet Médical</field>
+            <field name="description">Gestion complète d'un cabinet médical</field>
+            <field name="sequence">20</field>
+        </record>
+        
+        <!-- Groupe: Réception -->
+        <record id="group_clinic_reception" model="res.groups">
+            <field name="name">Réceptionniste</field>
+            <field name="category_id" ref="module_category_clinic"/>
+            <field name="comment">Peut gérer les patients et les rendez-vous</field>
+        </record>
+        
+        <!-- Groupe: Médecin -->
+        <record id="group_clinic_doctor" model="res.groups">
+            <field name="name">Médecin</field>
+            <field name="category_id" ref="module_category_clinic"/>
+            <field name="implied_ids" eval="[(4, ref('group_clinic_reception'))]"/>
+            <field name="comment">Accès complet aux consultations et prescriptions</field>
+        </record>
+        
+        <!-- Groupe: Manager (Admin Cabinet) -->
+        <record id="group_clinic_manager" model="res.groups">
+            <field name="name">Manager Cabinet</field>
+            <field name="category_id" ref="module_category_clinic"/>
+            <field name="implied_ids" eval="[(4, ref('group_clinic_doctor'))]"/>
+            <field name="comment">Accès administrateur complet au module</field>
+        </record>
+        
+    </data>
+</odoo>

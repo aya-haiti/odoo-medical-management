@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Séquence pour Patients -->
+        <record id="seq_clinic_patient" model="ir.sequence">
+            <field name="name">Patient</field>
+            <field name="code">clinic.patient</field>
+            <field name="prefix">PAT-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <!-- Séquence pour Médecins -->
+        <record id="seq_clinic_doctor" model="ir.sequence">
+            <field name="name">Médecin</field>
+            <field name="code">clinic.doctor</field>
+            <field name="prefix">DOC-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <!-- Séquence pour Rendez-vous -->
+        <record id="seq_clinic_appointment" model="ir.sequence">
+            <field name="name">Rendez-vous</field>
+            <field name="code">clinic.appointment</field>
+            <field name="prefix">RDV-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <!-- Séquence pour Consultations -->
+        <record id="seq_clinic_consultation" model="ir.sequence">
+            <field name="name">Consultation</field>
+            <field name="code">clinic.consultation</field>
+            <field name="prefix">CONS-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+        <!-- Séquence pour Ordonnances -->
+        <record id="seq_clinic_prescription" model="ir.sequence">
+            <field name="name">Ordonnance</field>
+            <field name="code">clinic.prescription</field>
+            <field name="prefix">ORD-</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Principal -->
+    <menuitem id="menu_clinic_root" name="Cabinet Médical" sequence="10"/>
+    
+    <!-- RÉCEPTION -->
+    <menuitem id="menu_clinic_reception" name="🔵 Réception" parent="menu_clinic_root" sequence="10" groups="group_clinic_reception"/>
+    <menuitem id="menu_appointment_today" name="RDV Aujourd'hui" parent="menu_clinic_reception" action="action_appointment_today" sequence="10"/>
+    <menuitem id="menu_appointment_all" name="Tous les RDV" parent="menu_clinic_reception" action="action_appointment" sequence="20"/>
+    <menuitem id="menu_patient_reception" name="Patients" parent="menu_clinic_reception" action="action_patient" sequence="30"/>
+    
+    <!-- MÉDECIN -->
+    <menuitem id="menu_clinic_doctor" name="🔴 Médecin" parent="menu_clinic_root" sequence="20" groups="group_clinic_doctor"/>
+    <menuitem id="menu_appointment_my" name="Mes Rendez-vous" parent="menu_clinic_doctor" action="action_appointment_my" sequence="10"/>
+    <menuitem id="menu_consultation" name="Consultations" parent="menu_clinic_doctor" action="action_consultation" sequence="20"/>
+    <menuitem id="menu_prescription" name="Ordonnances" parent="menu_clinic_doctor" action="action_prescription" sequence="30"/>
+    <menuitem id="menu_medicine" name="Médicaments" parent="menu_clinic_doctor" action="action_medicine" sequence="40"/>
+    <menuitem id="menu_patient_doctor" name="Patients" parent="menu_clinic_doctor" action="action_patient" sequence="50"/>
+    
+    <!-- CONFIGURATION -->
+    <menuitem id="menu_clinic_config" name="⚙️ Configuration" parent="menu_clinic_root" sequence="100" groups="group_clinic_manager"/>
+    <menuitem id="menu_doctor" name="Médecins" parent="menu_clinic_config" action="action_doctor" sequence="10"/>
+    
+    <!-- SÉQUENCES -->
+    <record id="sequence_appointment" model="ir.sequence">
+        <field name="name">Rendez-vous</field>
+        <field name="code">clinic.appointment</field>
+        <field name="prefix">RDV</field>
+        <field name="padding">5</field>
+    </record>
+    
+    <record id="sequence_consultation" model="ir.sequence">
+        <field name="name">Consultation</field>
+        <field name="code">clinic.consultation</field>
+        <field name="prefix">CONS</field>
+        <field name="padding">5</field>
+    </record>
+    
+    <record id="sequence_prescription" model="ir.sequence">
+        <field name="name">Ordonnance</field>
+        <field name="code">clinic.prescription</field>
+        <field name="prefix">ORD</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

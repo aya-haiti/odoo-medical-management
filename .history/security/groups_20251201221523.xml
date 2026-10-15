@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <!-- Catégorie du module -->
+        <record id="module_category_clinic" model="ir.module.category">
+            <field name="name">Cabinet Médical</field>
+            <field name="description">Gestion d'un Cabinet Médical</field>
+            <field name="sequence">10</field>
+        </record>
+        
+        <!-- Groupe RÉCEPTION (Accueil/Secrétariat) -->
+        <record id="group_clinic_reception" model="res.groups">
+            <field name="name">Réception</field>
+            <field name="category_id" ref="module_category_clinic"/>
+            <field name="comment">
+                Rôle Réception - Accès à:
+                - Gestion des rendez-vous (CRUD complet)
+                - Gestion des patients (CRUD complet)
+                - Vue liste des médecins (lecture seule)
+                - Envoi d'emails de confirmation
+                - Export Excel
+                
+                Restrictions:
+                - Pas d'accès aux consultations médicales
+                - Pas d'accès aux ordonnances
+                - Pas d'accès aux diagnostics
+            </field>
+        </record>
+        
+        <!-- Groupe MÉDECIN -->
+        <record id="group_clinic_doctor" model="res.groups">
+            <field name="name">Médecin</field>
+            <field name="category_id" ref="module_category_clinic"/>
+            <field name="comment">
+                Rôle Médecin - Accès à:
+                - Consultations médicales (CRUD complet)
+                - Ordonnances (CRUD complet)
+                - Historique médical des patients
+                - Fichiers médicaux (radios, analyses...)
+                - Gestion des médicaments
+                - Vue des rendez-vous (ses RDV uniquement)
+                - Vue des patients (lecture + consultation dossier médical)
+                - Impression PDF
+                - Export Excel
+                
+                Restrictions:
+                - Pas de création de rendez-vous
+                - Pas de modification infos accueil patients
+                - Voit uniquement SES consultations et RDV
+            </field>
+        </record>
+        
+        <!-- Groupe MANAGER (Administrateur Cabinet) -->
+        <record id="group_clinic_manager" model="res.groups">
+            <field name="name">Administrateur Cabinet</field>
+            <field name="category_id" ref="module_category_clinic"/>
+            <field name="implied_ids" eval="[(4, ref('group_clinic_reception')), (4, ref('group_clinic_doctor'))]"/>
+            <field name="comment">
+                Rôle Manager - Accès complet:
+                - Tous les droits Réception
+                - Tous les droits Médecin
+                - Gestion des médecins (CRUD)
+                - Accès à toutes les données
+                - Configuration du module
+            </field>
+        </record>
+        
+    </data>
+</odoo>

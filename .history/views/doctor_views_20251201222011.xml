@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_doctor_tree" model="ir.ui.view">
+        <field name="name">clinic.doctor.tree</field>
+        <field name="model">clinic.doctor</field>
+        <field name="arch" type="xml">
+            <tree string="Médecins">
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="appointment_count"/>
+                <field name="consultation_count"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_doctor_form" model="ir.ui.view">
+        <field name="name">clinic.doctor.form</field>
+        <field name="model">clinic.doctor</field>
+        <field name="arch" type="xml">
+            <form string="Médecin">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Dr. Nom Complet"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="specialization"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="license_number"/>
+                        </group>
+                        <group>
+                            <field name="qualification"/>
+                            <field name="experience_years"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_doctor" model="ir.actions.act_window">
+        <field name="name">Médecins</field>
+        <field name="res_model">clinic.doctor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

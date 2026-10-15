@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_consultation" model="ir.actions.report">
+        <field name="name">Fiche Consultation</field>
+        <field name="model">clinic.consultation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">clinic.report_consultation_document</field>
+        <field name="report_file">clinic.report_consultation_document</field>
+        <field name="binding_model_id" ref="model_clinic_consultation"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+    <template id="report_consultation_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">FICHE DE CONSULTATION</h2>
+                        <p class="text-center"><strong><span t-field="o.reference"/></strong></p>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Patient:</strong> <span t-field="o.patient_id.name"/><br/>
+                                <strong>Âge:</strong> <span t-field="o.patient_id.age"/> ans
+                            </div>
+                            <div class="col-6">
+                                <strong>Médecin:</strong> Dr. <span t-field="o.doctor_id.name"/><br/>
+                                <strong>Date:</strong> <span t-field="o.consultation_date"/>
+                            </div>
+                        </div>
+                        
+                        <h4 class="mt-4">Signes Vitaux:</h4>
+                        <p>
+                            Température: <span t-field="o.temperature"/>°C |
+                            Tension: <span t-field="o.blood_pressure"/> |
+                            Pouls: <span t-field="o.pulse"/> bpm
+                        </p>
+                        
+                        <h4>Diagnostic:</h4>
+                        <p><span t-field="o.diagnosis"/></p>
+                        
+                        <h4>Observations:</h4>
+                        <p><span t-field="o.observations"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

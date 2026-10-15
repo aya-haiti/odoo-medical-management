@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Vue Kanban Appointment (ATTRACTIVE avec URGENT en ROUGE) -->
+    <record id="view_appointment_kanban" model="ir.ui.view">
+        <field name="name">clinic.appointment.kanban</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" quick_create="false">
+                <field name="color"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="appointment_date"/>
+                <field name="display_time"/>
+                <field name="priority"/>
+                <field name="state"/>
+                <field name="patient_phone"/>
+                <field name="reason"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click #{record.priority.raw_value === 'urgent' ? 'border-danger' : ''}">
+                            <div class="oe_kanban_content">
+                                <!-- En-tête avec priorité -->
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="reference"/>
+                                            <t t-if="record.priority.raw_value === 'urgent'">
+                                                <span class="badge badge-danger ml-1">🚨 URGENT</span>
+                                            </t>
+                                        </strong>
+                                    </div>
+                                </div>
+                                
+                                <!-- Corps de la carte -->
+                                <div class="o_kanban_record_body mt-2">
+                                    <div>
+                                        <i class="fa fa-user text-primary"/> <strong><field name="patient_id"/></strong>
+                                    </div>
+                                    <div class="mt-1">
+                                        <i class="fa fa-user-md text-success"/> <field name="doctor_id"/>
+                                    </div>
+                                    <div class="mt-1">
+                                        <i class="fa fa-calendar text-info"/> <field name="appointment_date"/>
+                                        <i class="fa fa-clock-o text-warning ml-2"/> <field name="display_time"/>
+                                    </div>
+                                    <div class="mt-1">
+                                        <i class="fa fa-phone text-muted"/> <field name="patient_phone"/>
+                                    </div>
+                                    <t t-if="record.reason.raw_value">
+                                        <div class="mt-2 text-muted small">
+                                            <em><field name="reason"/></em>
+                                        </div>
+                                    </t>
+                                </div>
+                                
+                                <!-- Pied de carte -->
+                                <div class="o_kanban_record_bottom mt-2">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="state" widget="label_selection" options="{'classes': {'waiting': 'warning', 'with_doctor': 'info', 'done': 'success', 'cancelled': 'danger'}}"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="email_sent" widget="boolean_toggle" invisible="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <!-- Vue Tree Appointment (AVEC COULEURS) -->
+    <record id="view_appointment_tree" model="ir.ui.view">
+        <field name="name">clinic.appointment.tree</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Rendez-vous" 
+                  decoration-danger="priority=='urgent' and state not in ['done', 'cancelled']"
+                  decoration-muted="state=='cancelled'" 
+                  decoration-success="state=='done'"
+                  decoration-info="state=='with_doctor'"
+                  sample="1">
+                <field name="reference" decoration-bf="1"/>
+                <field name="appointment_date"/>
+                <field name="display_time" string="Heure"/>
+                <field name="patient_id"/>
+                <field name="patient_phone" optional="show"/>
+                <field name="doctor_id"/>
+                <field name="doctor_specialization" optional="hide"/>
+                <field name="priority" widget="badge" decoration-danger="priority=='urgent'" decoration-success="priority=='normal'"/>
+                <field name="state" widget="badge" 
+                       decoration-warning="state=='waiting'" 
+                       decoration-info="state=='with_doctor'" 
+                       decoration-success="state=='done'" 
+                       decoration-danger="state=='cancelled'"/>
+                <field name="email_sent" widget="boolean" optional="hide"/>
+                <field name="color" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Vue Form Appointment (ATTRACTIVE) -->
+    <record id="view_appointment_form" model="ir.ui.view">
+        <field name="name">clinic.appointment.form</field>
+        <field name="model">clinic.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Rendez-vous Médical">
+                <header>
+                    <!-- Boutons d'action -->
+                    <button name="action_set_waiting" string="⏸️ En Attente" type="object" states="cancelled" class="oe_highlight"/>
+                    <button name="action_set_with_doctor" string="👨‍⚕️ Chez le Médecin" type="object" states="waiting" class="oe_highlight" groups="clinic.group_clinic_doctor"/>
+                    <button name="action_create_consultation" string="📋 Démarrer Consultation" type="object" states="waiting,with_doctor" class="oe_highlight" groups="clinic.group_clinic_doctor"/>
+                    <button name="action_set_done" string="✅ Terminer" type="object" states="waiting,with_doctor" groups="clinic.group_clinic_doctor"/>
+                    <button name="action_cancel" string="❌ Annuler" type="object" states="waiting,with_doctor" confirm="Êtes-vous sûr de vouloir annuler ce rendez-vous?"/>
+                    <button name="action_resend_email" string="📧 Renvoyer Email" type="object" states="waiting" attrs="{'invisible': [('email_sent', '=', False)]}" groups="clinic.group_clinic_reception"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="waiting,with_doctor,done"/>
+                </header>
+                
+                <sheet>
+                    <!-- Titre avec référence -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" readonly="1"/>
+                        </h1>
+                    </div>
+                    
+                    <!-- Badge URGENT si nécessaire -->
+                    <div class="ribbon ribbon-top-right" attrs="{'invisible': [('priority', '!=', 'urgent')]}">
+                        <span class="bg-danger">🚨 URGENT</span>
+                    </div>
+                    
+                    <group>
+                        <group string="👤 Patient">
+                            <field name="patient_id" options="{'no_create': False, 'no_open': False}"/>
+                            <field name="patient_phone" readonly="1" widget="phone"/>
+                            <field name="patient_email" readonly="1" widget="email"/>
+                            <field name="patient_age" readonly="1"/>
+                        </group>
+                        <group string="👨‍⚕️ Médecin">
+                            <field name="doctor_id" options="{'no_create': False}"/>
+                            <field name="doctor_specialization" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group string="📅 Date et Heure">
+                            <field name="appointment_date"/>
+                            <field name="appointment_time" widget="float_time"/>
+                            <field name="display_time" readonly="1"/>
+                            <field name="appointment_datetime" readonly="1" invisible="1"/>
+                        </group>
+                        <group string="⚙️ Paramètres">
+                            <field name="priority" widget="radio" options="{'horizontal': true}"/>
+                            <field name="email_sent" readonly="1" widget="boolean"/>
+                            <field name="email_sent_date" readonly="1" attrs="{'invisible': [('email_sent', '=', False)]}"/>
+                        </group>
+                    </group>
+                    
+                    <group string="📝 Informations">
+                        <field name="reason" placeholder="Motif du rendez-vous (ex: Consultation générale, suivi, urgence...)"/>
+                        <field name="notes" placeholder="Notes de la réception (informations importantes)"/>
+                    </group>
+                    
+                    <!-- Consultation liée -->
+                    <group string="📋 Consultation" attrs="{'invisible': [('consultation_id', '=', False)]}" groups="clinic.group_clinic_doctor">
+                        <field name="consultation_id" readonly="1"/>
+                    </group>
+                    
+                </sheet>
+                
+                <!-- Chatter pour discussions -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>

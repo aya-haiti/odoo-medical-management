@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_medicine_tree" model="ir.ui.view">
+        <field name="name">clinic.medicine.tree</field>
+        <field name="model">clinic.medicine</field>
+        <field name="arch" type="xml">
+            <tree string="Médicaments">
+                <field name="name"/>
+                <field name="generic_name"/>
+                <field name="category"/>
+                <field name="dosage_form"/>
+                <field name="strength"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_medicine_form" model="ir.ui.view">
+        <field name="name">clinic.medicine.form</field>
+        <field name="model">clinic.medicine</field>
+        <field name="arch" type="xml">
+            <form string="Médicament">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="generic_name"/>
+                            <field name="category"/>
+                        </group>
+                        <group>
+                            <field name="dosage_form"/>
+                            <field name="strength"/>
+                            <field name="manufacturer"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_medicine" model="ir.actions.act_window">
+        <field name="name">Médicaments</field>
+        <field name="res_model">clinic.medicine</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

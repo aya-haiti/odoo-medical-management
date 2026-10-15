@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue Tree Medicine -->
+    <record id="view_medicine_tree" model="ir.ui.view">
+        <field name="name">clinic.medicine.tree</field>
+        <field name="model">clinic.medicine</field>
+        <field name="arch" type="xml">
+            <tree string="Médicaments">
+                <field name="name"/>
+                <field name="generic_name"/>
+                <field name="category"/>
+                <field name="dosage_form"/>
+                <field name="strength"/>
+                <field name="manufacturer" optional="hide"/>
+                <field name="price" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Vue Form Medicine -->
+    <record id="view_medicine_form" model="ir.ui.view">
+        <field name="name">clinic.medicine.form</field>
+        <field name="model">clinic.medicine</field>
+        <field name="arch" type="xml">
+            <form string="Médicament">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom commercial du médicament"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group string="Informations Principales">
+                            <field name="generic_name" placeholder="Nom générique (DCI)"/>
+                            <field name="category"/>
+                            <field name="dosage_form"/>
+                            <field name="strength" placeholder="Ex: 500mg, 5mg/ml"/>
+                        </group>
+                        <group string="Informations Commerciales">
+                            <field name="manufacturer" placeholder="Laboratoire fabricant"/>
+                            <field name="price"/>
+                            <field name="requires_prescription" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="📋 Description et Indications" name="description">
+                            <group>
+                                <field name="description" placeholder="Description et indications thérapeutiques" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="⚠️ Effets Secondaires" name="side_effects">
+                            <group>
+                                <field name="side_effects" placeholder="Effets secondaires possibles" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="🚫 Contre-indications" name="contraindications">
+                            <group>
+                                <field name="contraindications" placeholder="Contre-indications et précautions" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="💊 Posologie" name="dosage">
+                            <group>
+                                <field name="dosage_instructions" placeholder="Instructions de dosage standard" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="📝 Notes" name="notes">
+                            <group>
+                                <field name="notes" placeholder="Notes internes" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Vue Search Medicine - SANS group_by sur category -->
+    <record id="view_medicine_search" model="ir.ui.view">
+        <field name="name">clinic.medicine.search</field>
+        <field name="model">clinic.medicine</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Médicament">
+                <field name="name" string="Nom" filter_domain="['|', ('name', 'ilike', self), ('generic_name', 'ilike', self)]"/>
+                <field name="manufacturer"/>
+                
+                <separator/>
+                <!-- Filtres par catégorie -->
+                <filter string="Antibiotiques" name="category_antibiotic" domain="[('category', '=', 'antibiotic')]"/>
+                <filter string="Antalgiques" name="category_painkiller" domain="[('category', '=', 'painkiller')]"/>
+                <filter string="Anti-inflammatoires" name="category_anti_inflammatory" domain="[('category', '=', 'anti_inflammatory')]"/>
+                
+                <separator/>
+                <filter string="Sur Ordonnance" name="requires_prescription" domain="[('requires_prescription', '=', True)]"/>
+                <filter string="En Vente Libre" name="no_prescription" domain="[('requires_prescription', '=', False)]"/>
+                
+                <separator/>
+                <filter string="Archivés" name="inactive" domain="[('active', '=', False)]"/>
+                
+                <!-- Groupements - SANS category car c'est un Selection -->
+                <group expand="0" string="Grouper par">
+                    <filter string="Forme Pharmaceutique" name="group_dosage_form" context="{'group_by': 'dosage_form'}"/>
+                    <filter string="Fabricant" name="group_manufacturer" context="{'group_by': 'manufacturer'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Action Medicine -->
+    <record id="action_medicine" model="ir.actions.act_window">
+        <field name="name">Médicaments</field>
+        <field name="res_model">clinic.medicine</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer un nouveau médicament
+            </p>
+            <p>
+                Enregistrez les médicaments disponibles dans votre cabinet.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

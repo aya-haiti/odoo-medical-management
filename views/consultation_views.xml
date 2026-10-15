@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_consultation_tree" model="ir.ui.view">
+        <field name="name">clinic.consultation.tree</field>
+        <field name="model">clinic.consultation</field>
+        <field name="arch" type="xml">
+            <tree string="Consultations">
+                <field name="reference"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="consultation_date"/>
+                <field name="diagnosis"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_consultation_form" model="ir.ui.view">
+        <field name="name">clinic.consultation.form</field>
+        <field name="model">clinic.consultation</field>
+        <field name="arch" type="xml">
+            <form string="Consultation">
+                <header>
+                    <button name="action_start" string="Démarrer" type="object" states="draft" class="oe_highlight"/>
+                    <button name="action_create_prescription" string="Créer Ordonnance" type="object" class="oe_highlight"/>
+                    <button name="action_done" string="Terminer" type="object" states="draft,in_progress" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="reference" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="consultation_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Signes Vitaux">
+                            <group>
+                                <group>
+                                    <field name="temperature"/>
+                                    <field name="blood_pressure_systolic"/>
+                                    <field name="blood_pressure_diastolic"/>
+                                    <field name="pulse"/>
+                                </group>
+                                <group>
+                                    <field name="weight"/>
+                                    <field name="height"/>
+                                    <field name="bmi" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Consultation">
+                            <group>
+                                <field name="symptoms"/>
+                                <field name="diagnosis"/>
+                                <field name="observations"/>
+                                <field name="treatment_plan"/>
+                            </group>
+                        </page>
+                        <page string="Fichiers">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_consultation" model="ir.actions.act_window">
+        <field name="name">Consultations</field>
+        <field name="res_model">clinic.consultation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

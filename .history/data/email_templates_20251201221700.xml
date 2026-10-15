@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Email de Confirmation de Rendez-vous -->
+        <record id="email_template_appointment_confirmation" model="mail.template">
+            <field name="name">Confirmation Rendez-vous - Cabinet Médical</field>
+            <field name="model_id" ref="model_clinic_appointment"/>
+            <field name="subject">Confirmation de votre rendez-vous - ${object.reference}</field>
+            <field name="email_from">${object.doctor_id.email or user.email}</field>
+            <field name="email_to">${object.patient_id.email}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 20px;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    
+                    <!-- En-tête avec logo médical -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                            <h1 style="color: white; margin: 0; font-size: 28px;">
+                                🏥 Cabinet Médical
+                            </h1>
+                            <p style="color: #e0e7ff; margin: 5px 0 0 0; font-size: 16px;">
+                                Confirmation de Rendez-vous
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Corps du message -->
+                    <tr>
+                        <td style="padding: 40px 30px;">
+                            
+                            <p style="font-size: 16px; color: #333; margin: 0 0 20px 0;">
+                                Bonjour <strong>${object.patient_id.name}</strong>,
+                            </p>
+                            
+                            <p style="font-size: 14px; color: #666; line-height: 1.6; margin: 0 0 25px 0;">
+                                Votre rendez-vous médical a été confirmé avec succès. Voici les détails :
+                            </p>
+                            
+                            <!-- Carte d'informations -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8fafc; border-left: 4px solid #667eea; border-radius: 8px; margin-bottom: 25px;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        
+                                        <table width="100%" cellpadding="8" cellspacing="0">
+                                            <tr>
+                                                <td style="color: #64748b; font-size: 13px; width: 40%;">
+                                                    📋 Référence :
+                                                </td>
+                                                <td style="color: #1e293b; font-size: 14px; font-weight: bold;">
+                                                    ${object.reference}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #64748b; font-size: 13px;">
+                                                    👨‍⚕️ Médecin :
+                                                </td>
+                                                <td style="color: #1e293b; font-size: 14px; font-weight: bold;">
+                                                    ${object.doctor_id.name}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #64748b; font-size: 13px;">
+                                                    🩺 Spécialité :
+                                                </td>
+                                                <td style="color: #1e293b; font-size: 14px;">
+                                                    ${object.doctor_id.specialization}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #64748b; font-size: 13px;">
+                                                    📅 Date :
+                                                </td>
+                                                <td style="color: #1e293b; font-size: 14px; font-weight: bold;">
+                                                    ${format_date(object.appointment_date, date_format='dd/MM/yyyy')}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #64748b; font-size: 13px;">
+                                                    🕒 Heure :
+                                                </td>
+                                                <td style="color: #1e293b; font-size: 14px; font-weight: bold;">
+                                                    ${object.display_time}
+                                                </td>
+                                            </tr>
+                                            % if object.priority == 'urgent':
+                                            <tr>
+                                                <td style="color: #64748b; font-size: 13px;">
+                                                    ⚠️ Priorité :
+                                                </td>
+                                                <td style="color: #dc2626; font-size: 14px; font-weight: bold;">
+                                                    URGENT
+                                                </td>
+                                            </tr>
+                                            % endif
+                                        </table>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            % if object.reason:
+                            <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 15px; margin-bottom: 25px;">
+                                <p style="margin: 0; color: #78350f; font-size: 13px;">
+                                    <strong>📝 Motif :</strong><br/>
+                                    ${object.reason}
+                                </p>
+                            </div>
+                            % endif
+                            
+                            <!-- Conseils importants -->
+                            <div style="background-color: #dbeafe; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 15px; margin-bottom: 25px;">
+                                <p style="margin: 0 0 10px 0; color: #1e40af; font-size: 14px; font-weight: bold;">
+                                    ℹ️ Informations Importantes
+                                </p>
+                                <ul style="margin: 0; padding-left: 20px; color: #1e40af; font-size: 13px; line-height: 1.6;">
+                                    <li>Veuillez arriver 10 minutes avant l'heure prévue</li>
+                                    <li>N'oubliez pas votre carte d'identité</li>
+                                    <li>Apportez vos anciens examens médicaux si disponibles</li>
+                                    <li>En cas d'empêchement, merci de nous prévenir 24h à l'avance</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Contact -->
+                            <div style="background-color: #f1f5f9; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                                <p style="margin: 0 0 8px 0; color: #334155; font-size: 13px; font-weight: bold;">
+                                    📞 Contact Cabinet
+                                </p>
+                                % if object.doctor_id.phone:
+                                <p style="margin: 0; color: #64748b; font-size: 13px;">
+                                    Téléphone : <strong>${object.doctor_id.phone}</strong>
+                                </p>
+                                % endif
+                                % if object.doctor_id.email:
+                                <p style="margin: 0; color: #64748b; font-size: 13px;">
+                                    Email : <strong>${object.doctor_id.email}</strong>
+                                </p>
+                                % endif
+                            </div>
+                            
+                            <p style="font-size: 14px; color: #666; line-height: 1.6; margin: 0;">
+                                Nous vous remercions de votre confiance et nous nous réjouissons de vous accueillir.
+                            </p>
+                            
+                        </td>
+                    </tr>
+                    
+                    <!-- Pied de page -->
+                    <tr>
+                        <td style="background-color: #f8fafc; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; border-top: 1px solid #e2e8f0;">
+                            <p style="margin: 0; color: #94a3b8; font-size: 12px;">
+                                Cet email a été envoyé automatiquement, merci de ne pas y répondre.<br/>
+                                Pour toute question, veuillez contacter le cabinet directement.
+                            </p>
+                            <p style="margin: 10px 0 0 0; color: #cbd5e1; font-size: 11px;">
+                                © ${datetime.datetime.now().year} Cabinet Médical - Tous droits réservés
+                            </p>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+            <field name="lang">${object.patient_id.lang or 'fr_FR'}</field>
+        </record>
+        
+    </data>
+</odoo>

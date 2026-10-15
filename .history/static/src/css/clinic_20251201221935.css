@@ -1,0 +1,191 @@
+/* STYLES PERSONNALISÉS POUR MODULE CABINET MÉDICAL */
+
+/* Cartes Kanban - Amélioration visuelle */
+.o_kanban_record.border-danger {
+    border-left: 4px solid #dc3545 !important;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+}
+
+/* Badge URGENT en rouge vif */
+.badge-danger {
+    background-color: #dc3545 !important;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+/* Animation pulse pour attirer l'attention */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Ribbon pour marqueur URGENT */
+.ribbon {
+    position: absolute;
+    right: -5px; 
+    top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 93px; 
+    height: 93px;
+    text-align: right;
+}
+
+.ribbon span {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #FFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 20px;
+    transform: rotate(45deg);
+    width: 125px;
+    display: block;
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 24px; 
+    right: -29px;
+}
+
+.ribbon span::before {
+    content: "";
+    position: absolute; 
+    left: 0px; 
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 3px solid #dc3545;
+}
+
+.ribbon span::after {
+    content: "";
+    position: absolute; 
+    right: 0px; 
+    top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 3px solid #dc3545;
+}
+
+/* Amélioration des badges de statut */
+.o_field_badge {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Cartes patients avec ombres */
+.o_kanban_record_has_image_fill {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.o_kanban_record_has_image_fill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Boutons stat plus jolis */
+.oe_stat_button {
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.oe_stat_button:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.05);
+}
+
+/* Amélioration des formulaires */
+.o_form_sheet {
+    max-width: 1200px;
+}
+
+/* Titres de sections */
+.o_group .o_group_title {
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Icônes dans les listes */
+.o_list_table i.fa {
+    margin-right: 4px;
+}
+
+/* Amélioration du chatter */
+.oe_chatter {
+    margin-top: 20px;
+    border-top: 2px solid #e9ecef;
+}
+
+/* Searchpanel amélioré */
+.o_search_panel .o_search_panel_field {
+    border-radius: 6px;
+    padding: 8px;
+    transition: background 0.2s ease;
+}
+
+.o_search_panel .o_search_panel_field:hover {
+    background-color: #f8f9fa;
+}
+
+/* Ligne de tableau urgente en rouge */
+tr[data-id].text-danger {
+    background-color: #fff5f5 !important;
+}
+
+/* Avatar médecin/patient plus joli */
+.oe_avatar img {
+    border-radius: 50%;
+    border: 3px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Amélioration des notebooks */
+.o_notebook .nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.o_notebook .nav-tabs .nav-link {
+    border-radius: 6px 6px 0 0;
+    font-weight: 500;
+}
+
+.o_notebook .nav-tabs .nav-link.active {
+    border-bottom-color: white;
+    font-weight: 600;
+}
+
+/* Calendrier plus visible */
+.o_calendar_view .fc-event {
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 0.85rem;
+}
+
+/* Priorité urgente dans calendrier */
+.o_calendar_view .fc-event.fc-event-danger {
+    background-color: #dc3545 !important;
+    border-color: #bd2130 !important;
+    font-weight: bold;
+}
+
+/* Messages de succès/info plus jolis */
+.o_notification.bg-success {
+    border-left: 4px solid #28a745;
+}
+
+.o_notification.bg-info {
+    border-left: 4px solid #17a2b8;
+}
+
+.o_notification.bg-danger {
+    border-left: 4px solid #dc3545;
+}

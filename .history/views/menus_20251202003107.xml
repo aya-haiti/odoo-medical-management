@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Principal -->
+    <menuitem id="menu_clinic_root" 
+              name="Cabinet Médical" 
+              sequence="10"
+              web_icon="clinic,static/description/icon.png"/>
+    
+    <!-- RÉCEPTION -->
+    <menuitem id="menu_clinic_reception" 
+              name="🔵 Réception" 
+              parent="menu_clinic_root" 
+              sequence="10" 
+              groups="clinic.group_clinic_reception,clinic.group_clinic_manager"/>
+    
+    <menuitem id="menu_appointment_today" 
+              name="RDV Aujourd'hui" 
+              parent="menu_clinic_reception" 
+              action="action_appointment_today" 
+              sequence="10"/>
+    
+    <menuitem id="menu_appointment_all" 
+              name="Tous les RDV" 
+              parent="menu_clinic_reception" 
+              action="action_appointment" 
+              sequence="20"/>
+    
+    <menuitem id="menu_patient_reception" 
+              name="Patients" 
+              parent="menu_clinic_reception" 
+              action="action_patient" 
+              sequence="30"/>
+    
+    <!-- MÉDECIN -->
+    <menuitem id="menu_clinic_doctor" 
+              name="🔴 Médecin" 
+              parent="menu_clinic_root" 
+              sequence="20" 
+              groups="clinic.group_clinic_doctor,clinic.group_clinic_manager"/>
+    
+    <menuitem id="menu_appointment_my" 
+              name="Mes Rendez-vous" 
+              parent="menu_clinic_doctor" 
+              action="action_appointment_my" 
+              sequence="10"/>
+    
+    <menuitem id="menu_consultation" 
+              name="Consultations" 
+              parent="menu_clinic_doctor" 
+              action="action_consultation" 
+              sequence="20"/>
+    
+    <menuitem id="menu_prescription" 
+              name="Ordonnances" 
+              parent="menu_clinic_doctor" 
+              action="action_prescription" 
+              sequence="30"/>
+    
+    <menuitem id="menu_medicine" 
+              name="Médicaments" 
+              parent="menu_clinic_doctor" 
+              action="action_medicine" 
+              sequence="40"/>
+    
+    <menuitem id="menu_patient_doctor" 
+              name="Patients" 
+              parent="menu_clinic_doctor" 
+              action="action_patient" 
+              sequence="50"/>
+    
+    <!-- CONFIGURATION -->
+    <menuitem id="menu_clinic_config" 
+              name="⚙️ Configuration" 
+              parent="menu_clinic_root" 
+              sequence="100" 
+              groups="clinic.group_clinic_manager"/>
+    
+    <menuitem id="menu_doctor" 
+              name="Médecins" 
+              parent="menu_clinic_config" 
+              action="action_doctor" 
+              sequence="10"/>
+</odoo>

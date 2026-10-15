@@ -1,0 +1,284 @@
+/* ===============================================
+   CABINET MÉDICAL - STYLES PERSONNALISÉS
+   =============================================== */
+
+/* === 1. VARIABLES DE COULEURS === */
+:root {
+    --clinic-primary: #667eea;
+    --clinic-secondary: #764ba2;
+    --clinic-success: #28a745;
+    --clinic-danger: #dc3545;
+    --clinic-warning: #ffc107;
+    --clinic-info: #17a2b8;
+    --clinic-light: #f8f9fa;
+    --clinic-dark: #343a40;
+}
+
+/* === 2. STYLE GLOBAL DU MODULE === */
+.o_clinic_module {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === 3. CARTES KANBAN AMÉLIORÉES === */
+.o_kanban_record {
+    border-radius: 12px !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+}
+
+.o_kanban_record:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2) !important;
+}
+
+/* === 4. BADGE URGENT ANIMÉ === */
+.badge-danger, .ribbon-danger {
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%) !important;
+    animation: pulse-urgent 1.5s infinite !important;
+}
+
+@keyframes pulse-urgent {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* === 5. FORMULAIRES MODERNES === */
+.o_form_view .o_group {
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.o_form_sheet_bg {
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%) !important;
+}
+
+/* === 6. BOUTONS PERSONNALISÉS === */
+.btn-primary {
+    background: linear-gradient(135deg, var(--clinic-primary) 0%, var(--clinic-secondary) 100%) !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+    border: none !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+    border: none !important;
+}
+
+/* === 7. RIBBON URGENT === */
+.ribbon-animated {
+    animation: ribbon-wave 2s infinite;
+}
+
+@keyframes ribbon-wave {
+    0%, 100% {
+        transform: rotate(45deg) translateY(0);
+    }
+    50% {
+        transform: rotate(45deg) translateY(-5px);
+    }
+}
+
+/* === 8. CHAMPS DE FORMULAIRE === */
+.o_field_widget input,
+.o_field_widget select,
+.o_field_widget textarea {
+    border-radius: 6px !important;
+    border: 1px solid #e0e0e0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.o_field_widget input:focus,
+.o_field_widget select:focus,
+.o_field_widget textarea:focus {
+    border-color: var(--clinic-primary) !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+}
+
+/* === 9. HEADERS DE SECTIONS === */
+.o_horizontal_separator {
+    background: linear-gradient(90deg, var(--clinic-primary) 0%, transparent 100%);
+    height: 3px !important;
+    border: none !important;
+    margin: 20px 0 !important;
+}
+
+/* === 10. STATUT BADGES === */
+.badge {
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+    font-size: 11px !important;
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%) !important;
+    color: #000 !important;
+}
+
+.badge-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+}
+
+.badge-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+}
+
+/* === 11. CALENDRIER PERSONNALISÉ === */
+.fc-event {
+    border-radius: 8px !important;
+    padding: 5px 10px !important;
+    border: none !important;
+}
+
+.fc-event-urgent {
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%) !important;
+    animation: pulse-event 2s infinite;
+}
+
+@keyframes pulse-event {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* === 12. CHATTER AMÉLIORÉ === */
+.o_Message {
+    border-radius: 8px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+}
+
+/* === 13. TITRES DE PAGES === */
+.o_control_panel .breadcrumb-item {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: var(--clinic-primary) !important;
+}
+
+/* === 14. ICÔNES === */
+.fa, .oi {
+    color: var(--clinic-primary);
+    margin-right: 5px;
+}
+
+/* === 15. STATISTIQUES (Smart Buttons) === */
+.o_stat_info {
+    color: var(--clinic-primary) !important;
+    font-weight: 700 !important;
+}
+
+.o_stat_text {
+    color: #666 !important;
+    font-size: 12px !important;
+}
+
+/* === 16. TABLES === */
+.table thead {
+    background: linear-gradient(135deg, var(--clinic-primary) 0%, var(--clinic-secondary) 100%);
+    color: white !important;
+}
+
+.table thead th {
+    border: none !important;
+    padding: 12px !important;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(102, 126, 234, 0.05) !important;
+}
+
+/* === 17. MODAL DIALOGS === */
+.modal-header {
+    background: linear-gradient(135deg, var(--clinic-primary) 0%, var(--clinic-secondary) 100%);
+    color: white !important;
+}
+
+/* === 18. SEARCH BAR === */
+.o_searchview input {
+    border-radius: 20px !important;
+    padding-left: 15px !important;
+}
+
+/* === 19. PRIORITÉ VISUELLE === */
+.o_priority_star {
+    color: var(--clinic-warning) !important;
+    font-size: 16px !important;
+}
+
+/* === 20. RESPONSIVE === */
+@media (max-width: 768px) {
+    .o_kanban_record {
+        margin-bottom: 15px !important;
+    }
+    
+    .o_form_view .o_group {
+        padding: 15px !important;
+    }
+}
+
+/* === 21. ANIMATIONS === */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.o_form_view, .o_kanban_view {
+    animation: fadeIn 0.5s ease;
+}
+
+/* === 22. LOADER PERSONNALISÉ === */
+.o_loading {
+    background: linear-gradient(135deg, var(--clinic-primary) 0%, var(--clinic-secondary) 100%) !important;
+}
+
+/* === 23. TOOLTIPS === */
+.tooltip-inner {
+    background-color: var(--clinic-dark) !important;
+    border-radius: 6px !important;
+}
+
+/* === 24. PATIENT CARD (KANBAN) === */
+.patient-info-box {
+    border-left: 4px solid var(--clinic-primary);
+    padding-left: 15px !important;
+}
+
+.doctor-info-box {
+    border-left: 4px solid var(--clinic-success);
+    padding-left: 15px !important;
+}
+
+/* === 25. MENU LATÉRAL === */
+.o_menu_sections .o_nav_entry {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.o_menu_sections .o_nav_entry:hover {
+    background-color: rgba(102, 126, 234, 0.1);
+    transform: translateX(5px);
+}

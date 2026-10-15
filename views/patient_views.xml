@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Vue Kanban Patient (ATTRACTIVE) -->
+    <record id="view_patient_kanban" model="ir.ui.view">
+        <field name="name">clinic.patient.kanban</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="city"/>
+                <field name="appointment_count"/>
+                <field name="consultation_count"/>
+                <field name="image"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('clinic.patient', 'image', record.id.raw_value)" alt="Patient"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="age"/> ans - <field name="gender"/>
+                                    <br/>
+                                    <i class="fa fa-phone"/> <field name="phone"/>
+                                    <br/>
+                                    <i class="fa fa-map-marker"/> <field name="city"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-pill badge-info">
+                                            <i class="fa fa-calendar"/> <field name="appointment_count"/> RDV
+                                        </span>
+                                        <span class="badge badge-pill badge-success" groups="clinic.group_clinic_doctor">
+                                            <i class="fa fa-stethoscope"/> <field name="consultation_count"/> Cons.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <!-- Vue Tree Patient -->
+    <record id="view_patient_tree" model="ir.ui.view">
+        <field name="name">clinic.patient.tree</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <tree string="Patients" sample="1">
+                <field name="name" string="Nom Complet"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="phone"/>
+                <field name="email" optional="show"/>
+                <field name="city"/>
+                <field name="appointment_count" string="RDV"/>
+                <field name="consultation_count" string="Consult." groups="clinic.group_clinic_doctor"/>
+                <field name="last_consultation_date" optional="hide" groups="clinic.group_clinic_doctor"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Vue Form Patient (ATTRACTIVE) -->
+    <record id="view_patient_form" model="ir.ui.view">
+        <field name="name">clinic.patient.form</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <form string="Dossier Patient">
+                <header>
+                    <button name="action_view_appointments" type="object" string="Voir Rendez-vous" class="oe_highlight" icon="fa-calendar"/>
+                    <button name="action_view_consultations" type="object" string="Voir Consultations" class="oe_highlight" icon="fa-stethoscope" groups="clinic.group_clinic_doctor"/>
+                </header>
+                <sheet>
+                    <!-- Boutons statistiques -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_appointments" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <field name="appointment_count" widget="statinfo" string="Rendez-vous"/>
+                        </button>
+                        <button name="action_view_consultations" type="object" class="oe_stat_button" icon="fa-stethoscope" groups="clinic.group_clinic_doctor">
+                            <field name="consultation_count" widget="statinfo" string="Consultations"/>
+                        </button>
+                    </div>
+                    
+                    <!-- Photo -->
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    
+                    <!-- Nom et informations de base -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom complet du patient" required="1"/>
+                        </h1>
+                        <div class="o_row">
+                            <field name="age" readonly="1"/>
+                            <span>ans</span>
+                            <field name="gender" widget="radio" options="{'horizontal': true}"/>
+                        </div>
+                    </div>
+                    
+                    <group>
+                        <group string="Informations Personnelles">
+                            <field name="date_of_birth"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="blood_group" groups="clinic.group_clinic_doctor"/>
+                        </group>
+                        <group string="Adresse">
+                            <field name="address" placeholder="Adresse complète"/>
+                            <field name="city"/>
+                            <field name="postal_code"/>
+                        </group>
+                    </group>
+                    
+                    <!-- Informations médicales (visible seulement par médecin) -->
+                    <notebook groups="clinic.group_clinic_doctor">
+                        <page string="📋 Informations Médicales" name="medical">
+                            <group>
+                                <group>
+                                    <field name="allergies" placeholder="Allergies connues du patient"/>
+                                    <field name="chronic_diseases" placeholder="Maladies chroniques"/>
+                                </group>
+                                <group>
+                                    <field name="medical_history" placeholder="Antécédents médicaux importants"/>
+                                    <field name="last_consultation_date" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="📝 Notes" name="notes">
+                            <field name="notes" placeholder="Notes internes (non visibles par le patient)"/>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+                
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Vue Search Patient - CORRIGÉ -->
+    <record id="view_patient_search" model="ir.ui.view">
+        <field name="name">clinic.patient.search</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher Patient">
+                <field name="name" string="Nom ou Téléphone" filter_domain="['|', ('name', 'ilike', self), ('phone', 'ilike', self)]"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="city"/>
+                <separator/>
+                <filter string="Homme" name="male" domain="[('gender', '=', 'male')]"/>
+                <filter string="Femme" name="female" domain="[('gender', '=', 'female')]"/>
+                <separator/>
+                <filter string="Avec RDV" name="has_appointments" domain="[('appointment_count', '>', 0)]"/>
+                <filter string="Avec Consultations" name="has_consultations" domain="[('consultation_count', '>', 0)]" groups="clinic.group_clinic_doctor"/>
+                <separator/>
+                <filter string="Archivés" name="inactive" domain="[('active', '=', False)]"/>
+                
+                <!-- Groupements - SUPPRIMÉ group_by sur 'city' (Char) -->
+                <group expand="0" string="Grouper par">
+                    <filter string="Genre" name="group_gender" context="{'group_by': 'gender'}"/>
+                    <filter string="Groupe Sanguin" name="group_blood" context="{'group_by': 'blood_group'}" groups="clinic.group_clinic_doctor"/>
+                </group>
+                
+                <!-- SUPPRIMÉ searchpanel sur 'city' (Char) -->
+            </search>
+        </field>
+    </record>
+    
+    <!-- Action Patient -->
+    <record id="action_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">clinic.patient</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer un nouveau patient
+            </p>
+            <p>
+                Enregistrez les informations personnelles et médicales des patients.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

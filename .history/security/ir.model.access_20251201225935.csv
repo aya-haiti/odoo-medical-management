@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_patient_reception,clinic.patient.reception,model_clinic_patient,clinic.group_clinic_reception,1,1,1,1
+access_patient_doctor,clinic.patient.doctor,model_clinic_patient,clinic.group_clinic_doctor,1,0,0,0
+access_doctor_reception,clinic.doctor.reception,model_clinic_doctor,clinic.group_clinic_reception,1,0,0,0
+access_doctor_doctor,clinic.doctor.doctor,model_clinic_doctor,clinic.group_clinic_doctor,1,0,0,0
+access_doctor_manager,clinic.doctor.manager,model_clinic_doctor,clinic.group_clinic_manager,1,1,1,1
+access_appointment_reception,clinic.appointment.reception,model_clinic_appointment,clinic.group_clinic_reception,1,1,1,1
+access_appointment_doctor,clinic.appointment.doctor,model_clinic_appointment,clinic.group_clinic_doctor,1,1,0,0
+access_consultation_reception,clinic.consultation.reception,model_clinic_consultation,clinic.group_clinic_reception,0,0,0,0
+access_consultation_doctor,clinic.consultation.doctor,model_clinic_consultation,clinic.group_clinic_doctor,1,1,1,1
+access_prescription_reception,clinic.prescription.reception,model_clinic_prescription,clinic.group_clinic_reception,0,0,0,0
+access_prescription_doctor,clinic.prescription.doctor,model_clinic_prescription,clinic.group_clinic_doctor,1,1,1,1
+access_prescription_line_reception,clinic.prescription.line.reception,model_clinic_prescription_line,clinic.group_clinic_reception,0,0,0,0
+access_prescription_line_doctor,clinic.prescription.line.doctor,model_clinic_prescription_line,clinic.group_clinic_doctor,1,1,1,1
+access_medicine_reception,clinic.medicine.reception,model_clinic_medicine,clinic.group_clinic_reception,1,0,0,0
+access_medicine_doctor,clinic.medicine.doctor,model_clinic_medicine,clinic.group_clinic_doctor,1,1,1,1
